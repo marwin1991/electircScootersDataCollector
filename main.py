@@ -2,6 +2,8 @@ import json
 import requests
 import uuid
 import pymongo
+import pandas as pd
+import gmaps
 
 from bird import Bird
 
@@ -33,7 +35,7 @@ def get_nearby_scooters(token, guid, lat, long):
     params = {
         'latitude': lat,
         'longitude': long,
-        'radius': 100
+        'radius': 10000
     }
     headers = {
         'Authorization': 'Bird {}'.format(token),
@@ -48,26 +50,49 @@ def get_nearby_scooters(token, guid, lat, long):
             'heading': -1
         })
     }
-    r = requests.get(url=url, params=params, headers=headers)
+    
+    proxies = {
+     "http": "http://192.168.132.10:80",
+     "https": "http://192.168.132.10:80"
+    }
+
+    r = requests.get(url=url, params=params, headers=headers, proxies=proxies)
     print(r.status_code)
 
     return r.json().get("birds")
+    
+    
+def get_conf(lat, long):
+    
+    url = 'https://api.birdapp.com/config/location'
+
+    params = {
+        'latitude': lat,
+        'longitude': long,
+    }
+    
+    headers = {
+        'App-Version': '4.41.0'
+    }
+
+    proxies = {
+     "http": "http://192.168.132.10:80",
+     "https": "http://192.168.132.10:80"
+    }
+
+    r = requests.get(url=url, params=params, headers=headers, proxies=proxies)
+    print(r.status_code)
+    return r.json()
+    
+def draw_locs(locs):
+    return gmaps.symbol_layer(
+        locs, 
+        fill_color=(242, 0, 255), 
+        stroke_color=(242, 0, 255), 
+        scale=2
+    )
 
 
-
-if __name__ == "__main__":
-    birds_table = []
-    token = 'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjODVhNmQ1Zi1jY2U2LTQ3MmYtYmI4Mi02ZTA4NWJiYTBkODAiLCJuYmYiOjE1NzEyMDM4ODIsImV4cCI6MTU3MTI5MDI4MiwiYXVkIjoiYmlyZC5zZXJ2aWNlcyIsImlzcyI6ImJpcmQuYXV0aCIsImlhdCI6MTU3MTIwMzg4Miwicm9sZXMiOlsiVVNFUiJdLCJhcHAiOiI3YjhlZDk1NS02ZTNhLTRlZWMtYmEyMC04OGFmOWQ3YWVhNzYiLCJ2ZXIiOiIwLjAuMiJ9.ItBs1y3W-XBqkroqxMz0Vk68aAieIACCmCingQTf5yvvOeXVKUGvRcn9tpvUJ6V92rgxusI2ZPKTHtKMRnKE_CR7RFMJEflLaM9HaBEumm4Ric9CVMWk546adjf1m85GrCLbTRjzw5wWUGR_wmLxO0AZ4xjuUM15U_f37vtiJ2JVJfjjhCg3FltUDIWccrFONYlsq5W_LrjmEE2jxqgn5j29aBO-nG_hSpvQwOw3xLMk9pf1l1wiXhxSzF26zAG6oTCp8fxtr7HYUYxOwf7Zg01KOSWik4OxOVF_mn1gA_mPJoRRhUmI_m1jtGS3QvfXKj9OdlbnC_U2gm8Uqd3l7cQ1M-uPQeBOjxU3CwLFyt44UEnFp8GEoauIOyGjQFGpVMdz-zm7uhrjzG2hAAL9ot7lnH2Xh7CX94Q2haBzBtlCzk2Dr01rL4fM_rGjvmL7ysBqw0lw4uuvQTDLl2hU0sw0k-QKK40GXxc-qsmEvwVLdLEBdlYdPpFyvxxD1egw_cMZ4x_acJ-IJY8-E3oAMJLOHSq9VSxyXGK-Vh8CXLkKYkQbAtmNnlUVOSfAecJj6EY4_wfa65r2ydkTY1KiW53E_fZue6V2tlkUGVUSiuhAp3SH9JDk_4Va_D0h6Dm8pIGC5ny0H2i5obWl30XcARh8xreZaCxvmepBcgwoC6k'
-    guid = '10752AAB-A214-445C-BCBD-936264AA6251'
-    crac_long = 19.944544
-    crac_lat = 50.049683
-    birds =get_nearby_scooters(token, guid, crac_lat, crac_long)
-    for bird in birds:
-        birds_table.append(Bird(bird.get("id"), bird.get("location"), bird.get("code"), bird.get("model"),
-                                bird.get("vehicle_class"), bird.get("captive"), bird.get("battery_level"),
-                                bird.get("estimated_range"), bird.get("area_key")))
-    for bird in birds_table:
-        print(bird.battery_level)
 
 
 
