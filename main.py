@@ -92,6 +92,8 @@ def get_crocow_scooters():
 
     skawina_lat = 49.984524
     skawina_long = 19.843278
+    skawina_long_tmp = 19.843278
+
 
     crac_lat = 50.049683
     crac_long = 19.944544
@@ -100,10 +102,13 @@ def get_crocow_scooters():
 
     birds_dic = {}
 
+
+
     interator = 0
-    for i in range(6):
+    for _ in range(15):
         skawina_lat += delta
-        for j in range(6):
+        skawina_long = skawina_long_tmp
+        for _ in range(15):
             print('Getting birds number: ' + str(interator))
             interator +=1
             skawina_long += delta
