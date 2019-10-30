@@ -4,6 +4,7 @@ from geopy.distance import geodesic
 class Bird:
     def __init__(self, id, location, code, model, vehicle_class, captive, battlery_level, estimated_range, area_key):
         self.id = id
+        self.time = None
         self.location = location
         self.code = code
         self.model = model
@@ -23,4 +24,8 @@ class Bird:
 
     def set_new_location(self, new_location):
         self.location = new_location
+    
+    def set_time(self, time):
+        self.time = time
+
 
