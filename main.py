@@ -7,6 +7,7 @@ import pandas as pd
 import gmaps
 
 from bird import Bird
+from bird import calculate_distance
 
 proxies = {
     # "http": "http://192.168.132.10:80",
@@ -35,7 +36,7 @@ def get_token(guid):
     return token
 
 
-def get_nearby_scooters(token, guid, lat, long, radius = 1000, speed = -1):
+def get_nearby_scooters(token, guid, lat, long, radius=1000, speed=-1):
     url = 'https://api.birdapp.com/bird/nearby'
     params = {
         'latitude': lat,
@@ -59,17 +60,16 @@ def get_nearby_scooters(token, guid, lat, long, radius = 1000, speed = -1):
     r = requests.get(url=url, params=params, headers=headers, proxies=proxies)
     print('Req stat code: ' + str(r.status_code) + ' ', end='')
     return r.json()
-    
-    
+
+
 def get_conf(lat, long):
-    
     url = 'https://api.birdapp.com/config/location'
 
     params = {
         'latitude': lat,
         'longitude': long,
     }
-    
+
     headers = {
         'App-Version': '4.56.0'
     }
@@ -77,14 +77,28 @@ def get_conf(lat, long):
     r = requests.get(url=url, params=params, headers=headers, proxies=proxies)
     print('Req stat code: ' + str(r.status_code) + ' ', end='')
     return r.json()
-    
+
+
 def draw_locs(locs):
     return gmaps.symbol_layer(
-        locs, 
-        fill_color=(242, 0, 255), 
-        stroke_color=(242, 0, 255), 
+        locs,
+        fill_color=(242, 0, 255),
+        stroke_color=(242, 0, 255),
         scale=2
     )
+
+
+def get_total_distance(bird_id, birds):
+    bird_by_id = birds.find({"id": bird_id})
+    bird_by_id = list(bird_by_id)
+    total_distance = 0
+
+    for i in range(len(bird_by_id) - 1):
+        previous = bird_by_id[i]
+        actual = bird_by_id[i+1]
+        total_distance += calculate_distance(previous.get("location"), actual.get("location"))
+
+    return total_distance
 
 
 def get_crocow_scooters():
@@ -106,25 +120,19 @@ def get_crocow_scooters():
     for _ in range(6):
         tmp_long = start_long
         for _ in range(6):
-            interator +=1
+            interator += 1
             birds = get_nearby_scooters(token, guid, tmp_lat, tmp_long).get("birds")
-            print(str(interator) + '/36 long: ' + str(tmp_lat) + ' ; lat: ' + str(tmp_long) +" Got birds: " + str(len(birds)))
-            
+            print(str(interator) + '/36 long: ' + str(tmp_lat) + ' ; lat: ' + str(tmp_long) + " Got birds: " + str(
+                len(birds)))
+
             for bird in birds:
-                birds_dic[bird.get("id")] = Bird(bird.get("id"), bird.get("location"), bird.get("code"), bird.get("model"),
-                                bird.get("vehicle_class"), bird.get("captive"), bird.get("battery_level"),
-                                bird.get("estimated_range"), bird.get("area_key"))
-            
+                birds_dic[bird.get("id")] = Bird(bird.get("id"), bird.get("location"), bird.get("code"),
+                                                 bird.get("model"),
+                                                 bird.get("vehicle_class"), bird.get("captive"),
+                                                 bird.get("battery_level"),
+                                                 bird.get("estimated_range"), bird.get("area_key"))
+
             tmp_long += delta
         tmp_lat += delta
 
-    return [ v for v in birds_dic.values() ]
-
-
-
-
-
-
-
-
-
+    return [v for v in birds_dic.values()]

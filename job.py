@@ -1,5 +1,7 @@
 import pymongo
 from time import gmtime, strftime
+import pandas
+import gmaps
 
 import time
 import sys
