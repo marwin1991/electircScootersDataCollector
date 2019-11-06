@@ -88,27 +88,6 @@ def draw_locs(locs):
     )
 
 
-def get_total_distance(bird_id, birds):
-    bird_by_id = birds.find({"id": bird_id})
-    bird_by_id = list(bird_by_id)
-    total_distance = 0
-
-    for i in range(len(bird_by_id) - 1):
-        previous = bird_by_id[i]
-        actual = bird_by_id[i+1]
-        total_distance += calculate_distance(previous.get("location"), actual.get("location"))
-
-    return total_distance
-
-def get_bird_ammount_on_hour(hour, birds):
-    birds = birds.find({"time": "/^{}/".format(hour)})
-    birds = list(birds)
-    ids = {}
-    for bird in birds:
-        ids.add(bird.get("id"))
-    return ids.__len__()
-
-
 
 def get_crocow_scooters():
     token = 'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjODVhNmQ1Zi1jY2U2LTQ3MmYtYmI4Mi02ZTA4NWJiYTBkODAiLCJuYmYiOjE1NzEyMDM4ODIsImV4cCI6MTU3MTI5MDI4MiwiYXVkIjoiYmlyZC5zZXJ2aWNlcyIsImlzcyI6ImJpcmQuYXV0aCIsImlhdCI6MTU3MTIwMzg4Miwicm9sZXMiOlsiVVNFUiJdLCJhcHAiOiI3YjhlZDk1NS02ZTNhLTRlZWMtYmEyMC04OGFmOWQ3YWVhNzYiLCJ2ZXIiOiIwLjAuMiJ9.ItBs1y3W-XBqkroqxMz0Vk68aAieIACCmCingQTf5yvvOeXVKUGvRcn9tpvUJ6V92rgxusI2ZPKTHtKMRnKE_CR7RFMJEflLaM9HaBEumm4Ric9CVMWk546adjf1m85GrCLbTRjzw5wWUGR_wmLxO0AZ4xjuUM15U_f37vtiJ2JVJfjjhCg3FltUDIWccrFONYlsq5W_LrjmEE2jxqgn5j29aBO-nG_hSpvQwOw3xLMk9pf1l1wiXhxSzF26zAG6oTCp8fxtr7HYUYxOwf7Zg01KOSWik4OxOVF_mn1gA_mPJoRRhUmI_m1jtGS3QvfXKj9OdlbnC_U2gm8Uqd3l7cQ1M-uPQeBOjxU3CwLFyt44UEnFp8GEoauIOyGjQFGpVMdz-zm7uhrjzG2hAAL9ot7lnH2Xh7CX94Q2haBzBtlCzk2Dr01rL4fM_rGjvmL7ysBqw0lw4uuvQTDLl2hU0sw0k-QKK40GXxc-qsmEvwVLdLEBdlYdPpFyvxxD1egw_cMZ4x_acJ-IJY8-E3oAMJLOHSq9VSxyXGK-Vh8CXLkKYkQbAtmNnlUVOSfAecJj6EY4_wfa65r2ydkTY1KiW53E_fZue6V2tlkUGVUSiuhAp3SH9JDk_4Va_D0h6Dm8pIGC5ny0H2i5obWl30XcARh8xreZaCxvmepBcgwoC6k'
