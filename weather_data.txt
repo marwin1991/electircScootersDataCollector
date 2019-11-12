@@ -45,3 +45,23 @@
 2019:11:5:08:31 PM	9	75	4	Mist
 2019:11:6:07:33 AM	7	75	11	Partly cloudy
 2019:11:6:08:33 AM	8	50	7	Light Rain
+2019:11:6:10:28 AM	10	50	9	Partly cloudy
+2019:11:6:11:28 AM	10	50	20	Partly cloudy
+2019:11:6:12:28 PM	12	25	19	Partly cloudy
+2019:11:6:01:28 PM	12	50	22	Partly cloudy
+2019:11:6:02:28 PM	11	25	17	Partly cloudy
+2019:11:6:03:31 PM	10	0	15	Clear
+2019:11:6:04:28 PM	8	0	6	Clear
+2019:11:6:05:31 PM	7	0	0	Clear
+2019:11:6:06:29 PM	5	0	6	Clear
+2019:11:6:07:30 PM	4	0	0	Clear
+2019:11:6:08:28 PM	3	25	6	Partly cloudy
+2019:11:6:09:28 PM	2	50	4	Partly cloudy
+2019:11:6:10:28 PM	4	75	0	Partly cloudy
+2019:11:7:11:28 PM	3	0	0	Clear
+2019:11:7:12:28 AM	2	0	7	Mist
+2019:11:7:01:29 AM	2	0	6	Mist
+2019:11:7:02:28 AM	3	0	6	Clear
+2019:11:7:03:28 AM	3	0	6	Clear
+2019:11:7:04:28 AM	3	0	0	Clear
+2019:11:7:05:28 AM	4	50	0	Light Rain
