@@ -1,39 +1,44 @@
 from bird import calculate_distance
 
 
-def get_total_distance_and_moves(bird_id, birds, time):
+def get_distance_and_moves(bird_id, birds, time):
     if time == "any":
         bird_by_id = birds.find({"id": bird_id})
     else:
-        bird_by_id = birds.find({"id": bird_id, "time": "/{}/".format(time)})
+        #bird_by_id = birds.find({"id": bird_id},{"time": "/2019/"})
+        bird_by_id = birds.find({"$and": [{"id": bird_id}, {"time":{"$regex": u"" + time +""}}]})
     bird_by_id = list(bird_by_id)
+    
+    #print(len(bird_by_id))
     total_distance = 0
-    total_moves = 0
-
+    used = 0
+    print("----------------------------------------------------------")
+    print("ID: " + bird_id)
     for i in range(len(bird_by_id) - 1):
         previous = bird_by_id[i]
         actual = bird_by_id[i + 1]
-        distance = calculate_distance(previous.get("location"), actual.get("location"))
-        total_distance += distance
-        if(distance > 0):
-            total_moves +=1
+        #print(calculate_distance(previous.get("location"), actual.get("location"))
+        actual_distance = calculate_distance(previous.get("location"), actual.get("location"))
+        if(actual_distance > 0.001 and (int(previous.get("battery_level")) > int(actual.get("battery_level")))):
+            print(previous.get("time") + " " + previous.get("battery_level") + " " + actual.get("battery_level") +" " + str(actual_distance))
+            used += 1
+            total_distance += actual_distance
+    return {"distance":total_distance, "used": used}
 
-    return [total_distance, total_moves]
 
 
-
-def get_total_distance(bird_ids, birds, time):
-    total = 0
+def get_total(bird_ids, birds, time):
+    total_used = 0
+    total_dist = 0
+    interator = 0
+    bird_ids_len = len(bird_ids)
     for bird_id in bird_ids:
-        total += get_total_distance_and_moves(bird_id, birds, time)[0]
-    return total
-
-
-def get_total_moves(bird_ids, birds, time):
-    total = 0
-    for bird_id in bird_ids:
-        total += get_total_distance_and_moves(bird_id, birds, time)[1]
-    return total
+        interator +=1
+        dist_movs = get_distance_and_moves(bird_id, birds, time)
+        print("ID number : " + str(interator) + " of " + str(bird_ids_len))
+        total_used += dist_movs.get("used")
+        total_dist += dist_movs.get("distance")
+    return {"distance":total_dist, "used": total_used}
 
 def get_birds_ids(birds):
     return list(birds.distinct("id"))
