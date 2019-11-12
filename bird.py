@@ -21,8 +21,6 @@ class Bird:
         self.time = time
 
 def calculate_distance(old_location, new_location):
-    # old_location2 = (format(old_location.get("latitude"), ".6f"), format(old_location.get("longitude"), ".6f"))
-    # new_location2 = (format(new_location.get("latitude"), ".6f"), format(new_location.get("longitude"), ".6f"))
     old_location = (old_location.get("latitude"), old_location.get("longitude"))
     new_location = (new_location.get("latitude"), new_location.get("longitude"))
     distance = geodesic(old_location, new_location).kilometers

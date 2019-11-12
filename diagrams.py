@@ -1,6 +1,7 @@
+import pymongo
 
 from weather_object import WeatherObject
-from utils import rank_weather
+from utils import rank_weather, get_total_moves, get_total_distance, get_birds_ids
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -34,5 +35,19 @@ def plot_weather(file):
     plt.show()
 
 
+def plot_birds_distance(birds, birds_ids):
+    days = ["2019-10-31" , "2019-11:1", "2019-11:2", "2019-11:3", "2019-11:4", "2019-11:5", "any"]
+    x = [i+1 for i in range(len(days))]
+    y = [get_total_distance(birds_ids, birds, days[i]) for i in range(len(days))]
+    plt.plot(x, y)
+    plt.ylabel("Total distance")
+    plt.xlabel("Number of day")
+    plt.show()
+
+
 if __name__ == "__main__":
-    plot_weather("weather_data.txt")
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    mydb = myclient["db"]
+    birds = mydb["electric_scooters"]
+    birds_ids = get_birds_ids(birds)
+    plot_birds_distance(birds, birds_ids)
