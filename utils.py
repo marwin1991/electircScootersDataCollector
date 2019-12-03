@@ -20,7 +20,7 @@ def get_distance_and_moves(bird_id, birds, time):
         #print(calculate_distance(previous.get("location"), actual.get("location"))
         actual_distance = calculate_distance(previous.get("location"), actual.get("location"))
         if(actual_distance > 0.001 and (int(previous.get("battery_level")) > int(actual.get("battery_level")))):
-            print(previous.get("time") + " " + previous.get("battery_level") + " " + actual.get("battery_level") +" " + str(actual_distance))
+            print(str(previous.get("time")) + " " + str(previous.get("battery_level")) + " " + str(actual.get("battery_level")) +" " + str(actual_distance))
             used += 1
             total_distance += actual_distance
     return {"distance":total_distance, "used": used}
