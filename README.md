@@ -92,3 +92,10 @@ Zawiera rysowanie map z wykorzystaniem Google Maps, API key jest tam wpisany
 na sztywno, znalezłem go na GitHubie wieć może być juz nie aktualny. Warto przeszukać 
 GitHub/Google wpisując: gmaps.configure(api_key="AI
 albo jakąś podobną frazę.
+
+
+##Wizualizacje pogody
+
+Folder: weather
+
+Zawiera rysowanie wykresów pogodowych, sposób obliczania oceny pogody i wykresy.
