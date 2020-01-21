@@ -7,17 +7,17 @@ To explor data use https://robomongo.org/download
 If you use Linux make changes in docker-compose.yml
 
 ----------------------------------------------------------
-###Ogólny opis:
+### Ogólny opis:
 Projekt polegał na pobraniu danych z api firm Bird, która udostępnia
 hulajnogi w Krakowie oraz analizie tych danych.
 
-###Zależność
+### Zależność
 W projekcie korzystaliśmy z:
 * Python3 (zależności w pliku requirements.txt)
 * Notebooków jupyter - komenda startująca notebook: start-jupyter.bat
 * Docker
 
-###Baza danych
+### Baza danych
 
 Baza danych to MongoDB.
 Można ją pobrać i zainstalować lub korzystająć z dockera postawić 
@@ -42,7 +42,7 @@ dane pogodowe, aby też wpisywał do bazy danych
 
 Dwa pierwsze zbiory można zaimportować do MongoDB korzystując z Studio3T
 
-###Pobieranie danych
+### Pobieranie danych
 
 Folder: gather_data
 
@@ -74,7 +74,7 @@ aby był można go odpalić np o 4 rano w czasie działania skryptu pobierające
 W tym pliku na końcu są też dwa wykresy, jednak są one nie optymalne bo opierają swoje działanie
 na tabeli o położeniach hulajnóg a nie na tabeli z konkretnymi wypożyczeniami.
 
-###Wykresy
+### Wykresy
 
 Folder: charts_visualization
 
@@ -84,7 +84,7 @@ a nie z wykorzystaniem danych o konkretnych wypożyczeniach.
 Niektóre wykresy można wygenerowac przeprowadzając analize danych w narzędziu
 Studio3T. 
 
-###Wizualizacje na mapach
+### Wizualizacje na mapach
 
 Folder: maps_visualization
 
@@ -94,7 +94,7 @@ GitHub/Google wpisując: gmaps.configure(api_key="AI
 albo jakąś podobną frazę.
 
 
-##Wizualizacje pogody
+### Wizualizacje pogody
 
 Folder: weather
 
