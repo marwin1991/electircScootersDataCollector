@@ -9,9 +9,8 @@ services:
           - MONGO_DATA_DIR=/data/db
           - MONGO_LOG_DIR=/dev/null
         volumes:
-          # Linux
-          #- ./data/db:/data/db
-          # Windows
-          - /mnt/d/electircScootersDataCollector/data/db:/data/db
+          - db-data:/data/db
         ports:
           - 27017:27017
+volumes:
+  db-data:
